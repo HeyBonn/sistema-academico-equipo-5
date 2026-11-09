@@ -4,19 +4,20 @@
   <section class="formulario">
     <h2>{{ nuevoEstudiante.id === 0 ? 'Registrar Estudiante' : 'Editar Estudiante' }}</h2>
     
-    <form (ngSubmit)="guardarEstudiante()">
-      <div><label>Nombre:</label><input type="text" [(ngModel)]="nuevoEstudiante.nombre" name="nombre" required></div>
-      <div><label>Correo:</label><input type="email" [(ngModel)]="nuevoEstudiante.correo" name="correo" required></div>
-      <div><label>Carrera:</label><input type="text" [(ngModel)]="nuevoEstudiante.carrera" name="carrera" required></div>
-      <div><label>Teléfono:</label><input type="text" [(ngModel)]="nuevoEstudiante.telefono" name="telefono" required></div>
-      
-      <button type="submit">{{ nuevoEstudiante.id === 0 ? 'Guardar' : 'Actualizar' }}</button>
-      <button type="button" (click)="limpiarFormulario()" style="background-color: #64748b;">Cancelar</button>
-    </form>
+    <!---deshabilitar boton-->>
+   <form #miForm="ngForm" (ngSubmit)="guardarEstudiante()">
+  <div><label>Nombre:</label><input type="text" [(ngModel)]="nuevoEstudiante.nombre" name="nombre" required></div>
+  <div><label>Correo:</label><input type="email" [(ngModel)]="nuevoEstudiante.correo" name="correo" required></div>
+  <div><label>Carrera:</label><input type="text" [(ngModel)]="nuevoEstudiante.carrera" name="carrera" required></div>
+  <div><label>Teléfono:</label><input type="text" [(ngModel)]="nuevoEstudiante.telefono" name="telefono" required></div>
+  
+  <button type="submit" [disabled]="miForm.invalid">{{ nuevoEstudiante.id === 0 ? 'Guardar' : 'Actualizar' }}</button>
+  <button type="button" (click)="limpiarFormulario()" style="background-color: #64748b;">Cancelar</button>
+</form>
   </section>
 
   <section class="contenido">
-    <h2>Lista de Estudiantes (Total: {{ estudiantes.length }})</h2> // mostrar estudiantes
+    <h2>Lista de Estudiantes (Total: {{ estudiantes.length }})</h2> <!---mostrar estudiantes -->>
     @if (estudiantes.length > 0) {
       @for (estudiante of estudiantes; track estudiante.id) {
         <div class="tarjeta-estudiante">
