@@ -20,7 +20,8 @@
     <h2>Lista de Estudiantes (Total: {{ estudiantes.length }})</h2> <!---mostrar estudiantes -->>
     @if (estudiantes.length > 0) {
       @for (estudiante of estudiantes; track estudiante.id) {
-        <div class="tarjeta-estudiante" [class.editando] = "idEditando === estudiante.id">
+  <!--Se agrega una clase dinámica para resaltar la tarjeta cuando se está editando-->
+<div class="tarjeta-estudiante" [class.editando]="idEditando === estudiante.id">
           <p><strong>Nombre:</strong> {{ estudiante.nombre }}</p>
           <p><strong>Correo:</strong> {{ estudiante.correo }}</p>
           <p><strong>Carrera:</strong> {{ estudiante.carrera }}</p>
