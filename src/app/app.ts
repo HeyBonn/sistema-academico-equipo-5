@@ -31,9 +31,12 @@ private estudianteService = inject(EstudianteService);
   seleccionarParaEditar(estudiante: Estudiante) {
     this.nuevoEstudiante = { ...estudiante };
   }
-
+//eliminar con confirmación
   eliminar(id: number) {
-    this.estudianteService.eliminarEstudiante(id);
+    const confirmacion = confirm('¿Está seguro que desea eliminar al estudiante?')
+    if(confirmacion){
+        this.estudianteService.eliminarEstudiante(id);
+    }
   }
 
   limpiarFormulario() {
