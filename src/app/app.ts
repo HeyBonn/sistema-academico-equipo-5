@@ -15,6 +15,8 @@ export class App{
   //modificamos todo el codigo que estaba acá
   private estudianteService = inject(EstudianteService);
   estudiantes = this.estudianteService.obtenerEstudiantes();
+  // Texto utilizado para filtrar la lista de estudiantes.
+  textoBusquedam = '';
 
   // Añadir en la clase App:
 idEditando: number | null = null;
@@ -39,6 +41,27 @@ idEditando: number | null = null;
     const seguro = confirm('¿Estás seguro de que deseas eliminar este estudiante?');
     if (seguro) {
       this.estudianteService.eliminarEstudiante(id);
+    }
+  }
+
+  // Comprueba si algún dato del estudiante coincide con la búsqueda.
+  coincideBusqueda(estudiante: Estudiante): boolean {
+    const texto = this.textoBusquedam.trim().toLowerCase();
+    return [estudiante.nombre, estudiante.correo, estudiante.carrera, estudiante.telefono]
+      .some(dato => dato.toLowerCase().includes(texto));
+  }
+
+  get hayCoincidencias(): boolean {
+    return this.estudiantes.some(estudiante => this.coincideBusqueda(estudiante));
+  }
+
+  // Limpia la lista desde el servicio y reinicia la búsqueda y el formulario.
+  limpiarLista() {
+    const seguro = confirm('¿Estás seguro de que deseas limpiar la lista de estudiantes?');
+    if (seguro) {
+      this.estudianteService.limpiarEstudiante();
+      this.textoBusquedam = '';
+      this.limpiarFormulario();
     }
   }
 

@@ -30,4 +30,9 @@ export class EstudianteService {
       this.estudiantes.splice(index, 1);
     }
   }
+
+  // Vacía el arreglo conservando su referencia para actualizar la vista.
+  limpiarEstudiante(): void {
+    this.estudiantes.splice(0);
+  }
 }

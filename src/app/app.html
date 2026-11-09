@@ -19,7 +19,16 @@
   <section class="contenido">
     <h2>Lista de Estudiantes (Total: {{ estudiantes.length }})</h2> <!---mostrar estudiantes -->>
     @if (estudiantes.length > 0) {
+      <!-- Campo de búsqueda enlazado con textoBusquedam para filtrar estudiantes. -->
+      <div class="busqueda-estudiantes">
+        <label for="textoBusquedam">Buscar estudiante:</label>
+        <input id="textoBusquedam" type="text" [(ngModel)]="textoBusquedam" name="textoBusquedam">
+      </div>
+      <!-- Botón para vaciar la lista de estudiantes. -->
+      <button type="button" (click)="limpiarLista()" style="background-color: #ef4444;">Limpiar lista</button>
       @for (estudiante of estudiantes; track estudiante.id) {
+        <!-- Muestra únicamente los estudiantes que coinciden con la búsqueda. -->
+        @if (coincideBusqueda(estudiante)) {
   <!--Se agrega una clase dinámica para resaltar la tarjeta cuando se está editando-->
 <div class="tarjeta-estudiante" [class.editando]="idEditando === estudiante.id">
           <p><strong>Nombre:</strong> {{ estudiante.nombre }}</p>
@@ -29,6 +38,10 @@
           <button (click)="seleccionarParaEditar(estudiante)" style="background-color: #f59e0b;">Editar</button>
           <button (click)="eliminar(estudiante.id)" style="background-color: #ef4444;">Eliminar</button>
         </div>
+        }
+      }
+      @if (!hayCoincidencias) {
+        <p>No se encontraron estudiantes que coincidan con la búsqueda.</p>
       }
     } @else {
       <p>No hay estudiantes registrados.</p>
