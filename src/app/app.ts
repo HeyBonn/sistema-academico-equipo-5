@@ -1,4 +1,3 @@
-
 import  {Component, inject} from '@angular/core';
 import { Estudiante } from './models/estudiante';
 //nuevas importaciones:
@@ -14,8 +13,11 @@ import { EstudianteService } from './services/estudiantes';
 export class App{
   titulo : string = "Sistemas de Gestion Academica";
   //modificamos todo el codigo que estaba acá
-private estudianteService = inject(EstudianteService);
+  private estudianteService = inject(EstudianteService);
   estudiantes = this.estudianteService.obtenerEstudiantes();
+
+  // Añadir en la clase App:
+idEditando: number | null = null;
   
   nuevoEstudiante: Estudiante = { id: 0, nombre: '', correo: '', carrera: '', telefono: '' };
 
@@ -29,17 +31,19 @@ private estudianteService = inject(EstudianteService);
   }
 
   seleccionarParaEditar(estudiante: Estudiante) {
-    this.nuevoEstudiante = { ...estudiante };
-  }
-//eliminar con confirmación
+  this.nuevoEstudiante = { ...estudiante };
+  this.idEditando = estudiante.id; // Asignar ID al seleccionar
+}
+
   eliminar(id: number) {
-    const confirmacion = confirm('¿Está seguro que desea eliminar al estudiante?')
-    if(confirmacion){
-        this.estudianteService.eliminarEstudiante(id);
+    const seguro = confirm('¿Estás seguro de que deseas eliminar este estudiante?');
+    if (seguro) {
+      this.estudianteService.eliminarEstudiante(id);
     }
   }
 
   limpiarFormulario() {
-    this.nuevoEstudiante = { id: 0, nombre: '', correo: '', carrera: '', telefono: '' };
-  }
+  this.nuevoEstudiante = { id: 0, nombre: '', correo: '', carrera: '', telefono: '' };
+  this.idEditando = null; // Reiniciar al limpiar
+}
 }
